@@ -75,7 +75,7 @@ type
 
 type
   RtMidiCallback* = proc (deltaTime: cdouble, message: ptr UncheckedArray[byte],
-                          messageSize: csize, userData: pointer) {.cdecl.}
+                          messageSize: csize_t, userData: pointer) {.cdecl.}
 
 proc getCompiledApi*(apis: ptr MidiApi, apisSize: cuint): cint
   {.rtMidiImport, cdecl, importc: "rtmidi_get_compiled_api".}
@@ -120,7 +120,7 @@ proc ignoreTypes*(device: RtMidiWrapperPtr, midiSysEx: bool, midiTime: bool,
   {.rtMidiImport, cdecl, importc: "rtmidi_in_ignore_types".}
 
 proc getMessage*(device: RtMidiWrapperPtr, message: ptr byte,
-                 size: ptr csize): cdouble
+                 size: ptr csize_t): cdouble
   {.rtMidiImport, cdecl, importc: "rtmidi_in_get_message".}
 
 
