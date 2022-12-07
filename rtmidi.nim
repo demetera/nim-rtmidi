@@ -17,7 +17,7 @@ type
 #  MidiInCallback* = proc (timeStamp: float, message: openArray[byte]) {.closure.}
 
 type
-  RtMidiError* = object of Exception
+  RtMidiError* = object of CatchableError
 
 converter toHandle(m: MidiIO):  RtMidiHandle = m.handle
 
@@ -102,7 +102,7 @@ proc getNextMessage*(m: MidiIn,
                      buffer: var openArray[byte]): tuple[length: Natural,
                                                          eventDelta: float] =
   withHandleError(m):
-    var length: csize
+    var length: csize_t
     var eventDelta = wrapper.getMessage(m, buffer[0].addr, length.addr)
     result = (length.Natural, eventDelta)
 
